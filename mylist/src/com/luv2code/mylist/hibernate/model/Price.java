@@ -17,7 +17,7 @@ import com.luv2code.mylist.mvc.DateUtils;
 
 @Entity
 @Table(name="price")
-public class Price {
+public class Price implements Comparable<Price>{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -111,6 +111,16 @@ public class Price {
 	public String toString() {
 		return "PriceEntity [id=" + id + ", price=" + price + ", dateOfPurchase=" + dateOfPurchase + ", retailer="
 				+ retailer + ", product=" + product + "]";
+	}
+
+	@Override
+	public int compareTo(Price o) {
+		if (dateOfPurchase.before(o.dateOfPurchase)) {
+			return 1;
+		} else if (dateOfPurchase.after(o.dateOfPurchase)) {
+			return -1;
+		}
+		return 0;
 	}
 	
 }

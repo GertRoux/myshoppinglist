@@ -1,15 +1,17 @@
 package com.luv2code.mylist.mvc.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.luv2code.mylist.hibernate.model.Price;
-import com.luv2code.mylist.hibernate.model.Product;
 import com.luv2code.mylist.mvc.dao.PriceDAO;
-import com.luv2code.mylist.mvc.dao.ProductDAO;
 
 @Service
 public class PriceServiceImpl implements PriceService {
@@ -19,8 +21,21 @@ public class PriceServiceImpl implements PriceService {
 
 	@Override
 	@Transactional
-	public List<Price> getAllPrices() {
-		return priceDAO.getAllPrices();
+	public Map<String, List<Price>> getAllPrices() {
+		Map<String, List<Price>> theResponse = new HashMap<String, List<Price>>();
+		List<Price> prices = priceDAO.getAllPrices();
+		Collections.sort(prices);
+		for (Price price : prices) {
+			if (theResponse.containsKey(price.getProduct().getName())) {
+				theResponse.get(price.getProduct().getName()).add(price);
+			} else {
+				List<Price> value = new ArrayList<Price>();
+				value.add(price);
+				theResponse.put(price.getProduct().getName(),  value);
+			}
+		}
+		
+		return theResponse;
 	}
 
 	@Override

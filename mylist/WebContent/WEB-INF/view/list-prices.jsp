@@ -31,18 +31,41 @@
 			<input type="button" value="Add Price" onClick="window.location.href='showFormForAdd'; return false;" class="add-button" />
 			
 			<!--  add a search box -->
-            <form:form action="search" method="GET">
+            <%-- <form:form action="search" method="GET">
                 Search retailer: <input type="text" name="theSearchName" />
                 
                 <input type="submit" value="Search" class="add-button" />
-            </form:form>
+            </form:form> --%>
 			
 			<!-- add html table here -->
 			<table>
-				<tr>
-					<th> Price</th>
-					<th> Date of Purchase</th>
+				<c:forEach var="product" items="${prices}">
+					<tr>
+						<td><c:out value="${product.key}" /><td>
+						<c:forEach items="${product.value}" var="productItem">
+							<c:url var="updateLink" value="/price/showUpdateForm">
+								<c:param name="priceId" value="${productItem.id}" />
+							</c:url>
+							<c:url var="deleteLink" value="/price/deletePrice">
+								<c:param name="priceId" value="${productItem.id}" />
+							</c:url>
+							<td>
+								${productItem.price}<br>
+								on ${productItem.dateOfPurchase}<br>
+								at ${productItem.retailer.name}<br>
+								<a href="${updateLink}">Update</a>
+								|
+								<a href="${deleteLink}"
+							   	   onClick="if (!(confirm('Are you sure you want to delete this price?'))) return false">Delete</a>
+							</td>
+						</c:forEach>	
+					</tr>
+				</c:forEach>
+			
+				<%-- <tr>
 					<th> Product</th>
+					<th> Date of Purchase</th>
+					<th> Price</th>					
 					<th> Retailer</th>
 					<th> Action</th>
 				</tr>
@@ -55,9 +78,9 @@
 						<c:param name="priceId" value="${tempPrice.id}" />
 					</c:url>
 					<tr>
-						<td>${tempPrice.price}</td>
-						<td>${tempPrice.dateOfPurchase}</td>
 						<td>${tempPrice.product.name}</td>
+						<td>${tempPrice.dateOfPurchase}</td>
+						<td>${tempPrice.price}</td>
 						<td>${tempPrice.retailer.name}</td>
 						<!-- Update product link -->
 						<td>
@@ -67,7 +90,7 @@
 							   onClick="if (!(confirm('Are you sure you want to delete this price?'))) return false">Delete</a>
 						</td>
 					</tr>
-				</c:forEach>
+				</c:forEach> --%>
 			</table>
 			<div style="clear; both;"></div>
 			<p>
