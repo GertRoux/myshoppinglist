@@ -1,12 +1,10 @@
 package com.luv2code.mylist.mvc.model;
 
-import java.util.Date;
-
 public class Price {
 	
 	private Double price;
 	
-	private Date dateOfPurchase;
+	private String dateOfPurchase;
 	
 	private String product;
 	
@@ -16,7 +14,7 @@ public class Price {
 		
 	}
 
-	public Price(Double price, Date dateOfPurchase, String product, String retailer) {
+	public Price(Double price, String dateOfPurchase, String product, String retailer) {
 		super();
 		this.price = price;
 		this.dateOfPurchase = dateOfPurchase;
@@ -32,11 +30,11 @@ public class Price {
 		this.price = price;
 	}
 
-	public Date getDateOfPurchase() {
+	public String getDateOfPurchase() {
 		return dateOfPurchase;
 	}
 
-	public void setDateOfPurchase(Date dateOfPurchase) {
+	public void setDateOfPurchase(String dateOfPurchase) {
 		this.dateOfPurchase = dateOfPurchase;
 	}
 
